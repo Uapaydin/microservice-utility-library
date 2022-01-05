@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <define name="propExists" class="ch.qos.logback.core.property.ResourceExistsPropertyDefiner">
+        <resource>application.properties</resource>
+    </define>
+    <if condition='${propExists}'>
+        <then>
+            <property resource="application.properties" />
+        </then>
+        <else>
+            <property resource="application.yml" />
+        </else>
+    </if>
+
+    <property name="logDir" value="./log"/>
+    <springProperty name="appName" source="spring.application.name"/>
+    <property name="oldLogDir" value="${logDir}/old/${service-name}"/>
+    <property name="logFile" value="${logDir}/${appName}/${appName}.log"/>
+
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <Target>System.out</Target>
+        <encoder>
+            <pattern>
+                %d{YYYY-MM-dd HH:mm:ss.SSS}||${appName}||%-5level||%X{traceId}||%X{spanId}||%X{user-id}||%X{vendor-id}||%msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+        <url>http://elasticsearch.logging.svc.cluster.local:9200/_bulk</url>
+        <index>logs-%date{yyyy-MM-dd}</index>
+
+        <properties>
+            <property>
+                <name>host</name>
+                <value>${HOSTNAME}</value>
+                <allowEmpty>false</allowEmpty>
+            </property>
+            <property>
+                <name>severity</name>
+                <value>%level</value>
+            </property>
+            <property>
+                <name>thread</name>
+                <value>%thread</value>
+            </property>
+            <property>
+                <name>stacktrace</name>
+                <value>%ex</value>
+            </property>
+            <property>
+                <name>app-name</name>
+                <value>${appName}</value>
+            </property>
+            <property>
+                <name>traceId</name>
+                <value>%X{traceId}</value>
+            </property>
+            <property>
+                <name>requestId</name>
+                <value>%X{request-id}</value>
+            </property>
+            <property>
+                <name>user-id</name>
+                <value>%X{user-id}}</value>
+            </property>
+            <property>
+                <name>tenant-id</name>
+                <value>%X{tenant-id}}</value>
+            </property>
+        </properties>
+        <headers>
+            <header>
+                <name>Content-Type</name>
+                <value>application/json</value>
+            </header>
+        </headers>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="stdout" />
+    </root>
+</configuration>
