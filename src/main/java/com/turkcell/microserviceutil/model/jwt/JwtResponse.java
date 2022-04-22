@@ -1,4 +1,4 @@
-package com.turkcell.microserviceutil.model;
+package com.turkcell.microserviceutil.model.jwt;
 
 import java.io.Serializable;
 
