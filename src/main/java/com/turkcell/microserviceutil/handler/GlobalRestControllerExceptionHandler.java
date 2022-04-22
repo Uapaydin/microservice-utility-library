@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE + 10)
 public class GlobalRestControllerExceptionHandler extends BaseHandler {
     protected  static final Logger LOGGER = LoggerFactory.getLogger(GlobalRestControllerExceptionHandler.class);
 

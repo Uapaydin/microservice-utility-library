@@ -2,7 +2,7 @@ package com.turkcell.microserviceutil.service;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.turkcell.microserviceutil.enumaration.AuthorizationType;
-import com.turkcell.microserviceutil.model.request.RemoteCallPackage;
+import com.turkcell.microserviceutil.model.request.RemoteRestCallPackage;
 import com.turkcell.microserviceutil.model.request.RemoteCallRequest;
 import com.turkcell.microserviceutil.prop.JwtValidationProperties;
 import lombok.extern.slf4j.Slf4j;
@@ -64,7 +64,7 @@ public class TokenService implements InitializingBean {
     private void generateServiceToken(){
         if(Boolean.TRUE.equals(jwtValidationProperties.getGenerateServiceToken())){
             RemoteCallRequest remoteCallRequest = new RemoteCallRequest();
-            RemoteCallPackage processRequest = new RemoteCallPackage();
+            RemoteRestCallPackage processRequest = new RemoteRestCallPackage();
             processRequest.setAuthorizationType(AuthorizationType.NONE);
             processRequest.setHttpMethod(HttpMethod.POST);
             processRequest.setUrl(jwtValidationProperties.getJwksUrl() + "/api/v1/generate/service-token");

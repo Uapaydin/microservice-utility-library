@@ -32,7 +32,7 @@ public class SagaTransactionCollector {
 
     @After(value = "@within(Saga) && args(remoteCallRequest,..)")
     public void afterAdvice(JoinPoint joinPoint, RemoteCallRequest remoteCallRequest) {
-        sagaTransactionHandler.getTransactionHistory().add(remoteCallRequest);
+        sagaTransactionHandler.getTransactionHistory().push(remoteCallRequest);
         log.warn("After method:" + joinPoint.getSignature());
         log.warn("call completed remoteUrl " + remoteCallRequest);
     }

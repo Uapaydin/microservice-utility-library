@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @author tcuapaydin
+ * @author Utku APAYDIN
  * @created 22/04/2022 - 13:38
  */
 @Component

@@ -37,7 +37,7 @@ import java.util.Map;
 import java.util.Set;
 
 @RestControllerAdvice
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE + 11)
 public class RestExceptionHandler extends BaseHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

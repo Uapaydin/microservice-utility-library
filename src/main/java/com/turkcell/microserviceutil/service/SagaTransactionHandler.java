@@ -5,8 +5,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.RequestScope;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 /**
  * @author Utku APAYDIN
@@ -18,7 +17,7 @@ import java.util.List;
 public class SagaTransactionHandler {
 
     public SagaTransactionHandler(){
-        this.transactionHistory = new ArrayList<>();
+        this.transactionHistory = new Stack<>();
     }
-    List<RemoteCallRequest> transactionHistory;
+    Stack<RemoteCallRequest> transactionHistory;
 }
